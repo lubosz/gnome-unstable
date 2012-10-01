@@ -1,0 +1,42 @@
+# $Id: PKGBUILD 167167 2012-09-26 18:35:43Z jgc $
+# Maintainer: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
+
+pkgname=gnome-session
+pkgver=3.6.0
+pkgrel=1
+pkgdesc="The GNOME Session Handler"
+arch=(i686 x86_64)
+license=('GPL' 'LGPL')
+depends=('libsystemd' 'dconf' 'gconf' 'gsettings-desktop-schemas' 'gtk3'
+         'hicolor-icon-theme' 'json-glib' 'libgl' 'libsm' 'libxtst' 'polkit-gnome'
+         'upower')
+makedepends=('intltool' 'mesa' 'xtrans')
+options=('!emptydirs')
+install=gnome-session.install
+url="http://www.gnome.org"
+groups=('gnome')
+source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz
+        gnome-session-3.3.1-llvmpipe.patch timeout.patch)
+sha256sums=('f82b236f18bc78cef16d4cc3d3892f9a5afff81fdb3e04319b3505aa00e888c1'
+            '59ea58012febe48a67dabd944dc638400637ad4d296d63b63b585f10eea4f85e'
+            '9eaf31857b41db417475c3b14adc11b10c8226ed76978cdf96dd648fa6e505fc')
+
+build() {
+  cd $pkgname-$pkgver
+
+  # Allow software rendering
+  patch -Np1 -i ../gnome-session-3.3.1-llvmpipe.patch
+
+  # Increase timeout, for slow machines
+  patch -Np1 -i ../timeout.patch
+
+  ./configure --prefix=/usr --sysconfdir=/etc \
+      --localstatedir=/var --libexecdir=/usr/lib/gnome-session \
+      --disable-schemas-compile --enable-systemd
+  make
+}
+
+package() {
+  cd $pkgname-$pkgver
+  make DESTDIR="$pkgdir" install
+}

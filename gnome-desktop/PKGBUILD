@@ -1,0 +1,31 @@
+# $Id: PKGBUILD 167132 2012-09-25 21:08:02Z heftig $
+# Maintainer:  Jan de Groot <jan@archlinux.org>
+
+pkgname=gnome-desktop
+pkgver=3.6.0.1
+pkgrel=1
+epoch=1
+pkgdesc="Library with common API for various GNOME modules"
+arch=('i686' 'x86_64')
+license=('GPL' 'LGPL')
+depends=('gsettings-desktop-schemas' 'gtk3' 'xkeyboard-config')
+makedepends=('gnome-doc-utils' 'intltool' 'gobject-introspection' 'itstool')
+url="http://www.gnome.org"
+groups=('gnome')
+options=('!libtool')
+source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver::3}/$pkgname-$pkgver.tar.xz)
+sha256sums=('f3a3a7229426360d48677846bf7a674b12ef89b0a353044d7cc488c438d2ee5f')
+
+build() {
+  cd "$pkgname-$pkgver"
+  ./configure --prefix=/usr --sysconfdir=/etc \
+      --localstatedir=/var --disable-static \
+      --libexecdir=/usr/lib/gnome-desktop \
+      --with-gnome-distributor="Arch Linux"
+  make
+}
+
+package() {
+  cd "$pkgname-$pkgver"
+  make DESTDIR="$pkgdir" install
+}

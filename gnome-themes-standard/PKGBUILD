@@ -1,0 +1,31 @@
+# $Id: PKGBUILD 167130 2012-09-25 20:56:36Z heftig $
+# Maintainer: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
+
+pkgname=gnome-themes-standard
+pkgver=3.6.0.2
+pkgrel=1
+pkgdesc="Default themes for the GNOME desktop"
+arch=('i686' 'x86_64')
+url="http://www.gnome.org"
+license=('GPL2')
+depends=('cantarell-fonts' 'ttf-dejavu' 'gtk3' 'gtk-engines' 'librsvg')
+makedepends=('intltool')
+groups=('gnome')
+replaces=('gnome-themes')
+conflicts=('gnome-themes')
+options=('!libtool')
+source=(http://download.gnome.org/sources/$pkgname/${pkgver::3}/$pkgname-$pkgver.tar.xz)
+sha256sums=('3f3c0448d7cda9a9381570c9869df2a7b2ef8587d85817bc5bbcf24870244490')
+
+build() {
+  cd $pkgname-$pkgver
+  ./configure --prefix=/usr
+  make
+}
+
+package() {
+  cd $pkgname-$pkgver
+  make DESTDIR="${pkgdir}" install
+}
+
+# vim:set ts=2 sw=2 et:
