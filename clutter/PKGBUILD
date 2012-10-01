@@ -11,7 +11,7 @@ arch=('i686' 'x86_64')
 url="http://clutter-project.org/"
 options=('!libtool')
 license=('LGPL')
-depends=('cogl' 'mesa' 'json-glib' 'atk' 'libxi')
+depends=('cogl' 'mesa' 'json-glib' 'atk>=2.5.3' 'libxi')
 makedepends=('gobject-introspection' 'mesa')
 source=(http://download.gnome.org/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
 sha256sums=('e75130a5df6dbe97e8d350259278331c6352b2d213230712127160e42053e558')

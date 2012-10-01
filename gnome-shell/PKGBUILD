@@ -3,20 +3,20 @@
 # Contributor: Flamelab <panosfilip@gmail.com
 
 pkgname=gnome-shell
-pkgver=3.5.92
+pkgver=3.6.0
 pkgrel=1
 pkgdesc="The next generation GNOME Shell"
 arch=('i686' 'x86_64')
 url="http://live.gnome.org/GnomeShell"
 license=('GPL2')
-depends=('caribou' 'folks' 'gcr' 'gjs' 'gnome-bluetooth' 'gnome-desktop' 'gnome-menus' 'libcroco' 'libpulse' 'mutter' 'nautilus' 'networkmanager' 'telepathy-logger' 'telepathy-mission-control' 'unzip')
+depends=('at-spi2-atk>=2.6.0' 'caribou' 'clutter>=1.11.11' 'evolution-data-server>=3.5.3' 'folks' 'gcr' 'gjs>=1.33.2' 'gnome-bluetooth' 'gnome-desktop>=1:3.5.1' 'gnome-menus>=3.5.3' 'libcroco' 'libpulse' 'mutter>=3.6.0' 'nautilus' 'networkmanager' 'telepathy-logger' 'telepathy-mission-control' 'unzip')
 makedepends=('intltool' 'gnome-doc-utils')
 optdepends=('network-manager-applet: shell integration for networkmanager')
 options=('!libtool' '!emptydirs')
 install=gnome-shell.install
 groups=(gnome)
 source=(http://ftp.gnome.org/pub/GNOME/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
-sha256sums=('bf43ade818f2fd7631492a5eb61522524b7bdb84d3627a21bd4bde9100e0e6af')
+sha256sums=('032ad32a4fa6c1f92010635e3076031323ac690f78c610184438c085c355e07b')
 
 build() {
   cd $pkgname-$pkgver
@@ -31,3 +31,4 @@ package() {
   cd $pkgname-$pkgver
   make DESTDIR="$pkgdir" install
 }
+

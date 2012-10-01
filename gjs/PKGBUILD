@@ -8,7 +8,7 @@ pkgdesc="Javascript Bindings for GNOME"
 arch=('i686' 'x86_64')
 url="http://live.gnome.org/Gjs"
 license=('GPL')
-depends=('cairo' 'dbus-glib' 'gobject-introspection' 'js')
+depends=('cairo' 'dbus-glib' 'gobject-introspection>=1.33' 'js')
 options=('!libtool')
 source=(http://download.gnome.org/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
 sha256sums=('3d62c717a0522a36c6faa1eb021872255e3cd285a72786afe23b7cca2e3084cb')

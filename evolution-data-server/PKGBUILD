@@ -6,7 +6,7 @@ pkgver=3.6.0
 pkgrel=1
 pkgdesc="Centralized access to appointments and contacts"
 arch=('i686' 'x86_64')
-depends=('gnome-online-accounts' 'nss' 'krb5' 'libgweather' 'libical' 'db' 'libgdata')
+depends=('gnome-online-accounts' 'nss' 'krb5' 'libgweather>=3.5.0' 'libical' 'db' 'libgdata')
 makedepends=('intltool' 'gperf' 'gobject-introspection' 'vala')
 options=('!libtool')
 install=$pkgname.install
@@ -17,7 +17,10 @@ sha256sums=('50a7dd1a8109aefa748e6ba7b6469bb5bf8739b30a197c495db516703f3aaba8')
 
 build() {
   cd "$pkgname-$pkgver"
-  ./configure --prefix=/usr --sysconfdir=/etc \
+  
+  sed -i -e 's/env python/python2/' addressbook/libebook/gen-western-table.py
+  
+  PYTHON=/usr/bin/python2 ./configure --prefix=/usr --sysconfdir=/etc \
       --localstatedir=/var --with-openldap=yes \
       --libexecdir=/usr/lib/evolution-data-server \
       --with-krb5=/usr --with-libdb=/usr \

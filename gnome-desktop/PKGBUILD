@@ -8,7 +8,7 @@ epoch=1
 pkgdesc="Library with common API for various GNOME modules"
 arch=('i686' 'x86_64')
 license=('GPL' 'LGPL')
-depends=('gsettings-desktop-schemas' 'gtk3' 'xkeyboard-config')
+depends=('gsettings-desktop-schemas>=3.5.91' 'gtk3>=3.3.6' 'xkeyboard-config')
 makedepends=('gnome-doc-utils' 'intltool' 'gobject-introspection' 'itstool')
 url="http://www.gnome.org"
 groups=('gnome')

@@ -8,7 +8,7 @@ pkgdesc="Introspection system for GObject-based libraries"
 url="https://live.gnome.org/GObjectIntrospection"
 arch=('x86_64' 'i686')
 license=('LGPL' 'GPL')
-depends=('glib2' 'python2')
+depends=('glib2>=2.34' 'python2')
 makedepends=('cairo')
 options=('!libtool')
 source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
