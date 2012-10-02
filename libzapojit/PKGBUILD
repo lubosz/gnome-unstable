@@ -1,0 +1,27 @@
+# $Id: $
+# Maintainer: Yangtse Su <yangtsesu@gmail.com>
+
+pkgname=libzapojit
+pkgver=0.0.2
+pkgrel=1
+pkgdesc="GLib/GObject wrapper for the SkyDrive and Hotmail REST APIs"
+arch=('i686' 'x86_64')
+url="http://developer.gnome.org/libzapojit"
+license=('GPL')
+options=('!libtool')
+depends=('libsoup' 'rest' 'json-glib')
+makedepends=('gtk-doc')
+source=(http://ftp.gnome.org/pub/gnome/sources/libzapojit/0.0/$pkgname-$pkgver.tar.xz)
+md5sums=('2cdb9f15f2860ed4efff4d35a7e5929f')
+
+build() {
+    cd "$pkgname-$pkgver"
+
+    ./configure --prefix=/usr
+    make
+}
+
+package() {
+    cd "$pkgname-$pkgver"
+    make DESTDIR="$pkgdir" install
+}
