@@ -53,7 +53,7 @@ package_totem() {
   rm "$pkgdir/usr/lib/totem/totem-plugin-viewer"
 
   sed -i "s|#!/usr/bin/python$|#!/usr/bin/python2|" \
-    $pkgdir/usr/lib/totem/{totem/totem-bugreport.py,plugins/iplayer/iplayer2.py}
+    $pkgdir/usr/lib/totem/totem/totem-bugreport.py
 
   install -Dm644 COPYING "$pkgdir/usr/share/licenses/totem/COPYING"
 }
