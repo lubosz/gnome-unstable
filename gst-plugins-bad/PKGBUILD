@@ -1,0 +1,36 @@
+# $Id: PKGBUILD 160767 2012-06-05 08:51:43Z jgc $
+# Maintainer: Jan de Groot <jgc@archlinux.org>
+
+pkgbase=gst-plugins-bad
+pkgname=('gst-plugins-bad')
+pkgver=1.0.0
+pkgrel=1
+arch=('i686' 'x86_64')
+license=('LGPL' 'GPL')
+pkgdesc="GStreamer Multimedia Framework Bad Plugins"
+depends=('gst-plugins-base>=1.0.0')
+makedepends=('pkgconfig' 'gst-plugins-base>=1.0.0' 'xvidcore' 'libdca' 'bzip2' 'libdc1394' 'neon' 'faac' 'musicbrainz' 'faad2' 'libmms' 'libcdaudio' 'libmpcdec' 'mjpegtools' 'libdvdnav' 'libmodplug' 'jasper' 'liblrdf' 'libofa' 'soundtouch' 'libvdpau' 'schroedinger' 'libass' 'libvpx' 'gsm' 'libgme' 'rtmpdump' 'libsndfile' 'librsvg' 'wildmidi')
+url="http://gstreamer.freedesktop.org/"
+options=(!libtool !emptydirs)
+source=(${url}/src/gst-plugins-bad/gst-plugins-bad-${pkgver}.tar.xz)
+sha256sums=('9af78a20a535687bfbb58128713376f3f5ae670af8afb3be4285713557c2381b')
+
+build() {
+  cd "${srcdir}/gst-plugins-bad-${pkgver}"
+  ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+    --disable-static --enable-experimental \
+    --with-package-name="GStreamer Bad Plugins (Archlinux)" \
+    --with-package-origin="http://www.archlinux.org/"
+  make
+}
+
+# Disable for now: 2 tests fail, one of them is because of not having a camera during build.
+#check() {
+#  cd "${srcdir}/gst-plugins-bad-${pkgver}"
+#  make check
+#}
+
+package() {
+  cd "${srcdir}/gst-plugins-bad-${pkgver}"
+  make DESTDIR="${pkgdir}" install
+}

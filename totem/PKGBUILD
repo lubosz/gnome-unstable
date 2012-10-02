@@ -6,7 +6,7 @@ pkgbase=totem
 pkgname=('totem' 'totem-plugin')
 pkgver=3.6.0
 pkgrel=1
-pkgdesc="A GNOME3 integrated movie player based on Gstreamer."
+pkgdesc="A GNOME integrated movie player based on Gstreamer."
 url="http://www.gnome.org"
 arch=('i686' 'x86_64')
 license=('GPL2' 'custom')
@@ -38,7 +38,7 @@ package_totem() {
   groups=('gnome-extra')
   install=totem.install
   optdepends=('gst-plugins-ugly: Extra media codecs'
-              'gst-plugins-ffmpeg: Extra media codecs'
+              'gst-libav: Extra media codecs'
               'lirc-utils: Infrared Remote Control plugin'
               'libepc: Publish Playlist plugin'
               'libgdata: YouTube Browser plugin'
