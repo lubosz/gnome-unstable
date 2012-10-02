@@ -38,7 +38,7 @@ package_totem() {
   groups=('gnome-extra')
   install=totem.install
   optdepends=('gst-plugins-ugly: Extra media codecs'
-              'gst-plugins-ffmpeg: Extra media codecs'
+              'gst-libav: Extra media codecs'
               'lirc-utils: Infrared Remote Control plugin'
               'libepc: Publish Playlist plugin'
               'libgdata: YouTube Browser plugin'

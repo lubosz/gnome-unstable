@@ -1,0 +1,30 @@
+# $Id: PKGBUILD 147131 2012-01-22 11:26:07Z andyrtr $
+# Maintainer: Jan de Groot <jgc@archlinux.org>
+
+pkgname=gst-libav
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="GStreamer plugin for the libav* library (former FFmpeg)"
+arch=('i686' 'x86_64')
+license=('GPL')
+depends=('gst-plugins-base' 'bzip2')
+makedepends=('pkgconfig' 'yasm' 'sdl')
+url="http://www.gstreamer.net"
+groups=('gstreamer-plugins')
+options=('!libtool')
+source=(http://gstreamer.freedesktop.org/src/gst-libav/gst-libav-${pkgver}.tar.xz)
+sha256sums=('9d1cf67210f1e3aa7f06a45b94c2f519a5aaf8a5ed7bf4dbd66dc64a35436131')
+
+build() {
+  cd "${srcdir}/gst-libav-${pkgver}"
+  unset CFLAGS
+  unset CXXFLAGS
+  ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static --with-libav-extra-configure="--enable-runtime-cpudetect"
+  make
+}
+
+package() {
+  cd "${srcdir}/gst-libav-${pkgver}"
+
+  make DESTDIR="${pkgdir}" install
+}
