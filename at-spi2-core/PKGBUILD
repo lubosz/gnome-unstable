@@ -1,18 +1,17 @@
-# $Id: PKGBUILD 167110 2012-09-25 12:01:58Z heftig $
+# $Id: PKGBUILD 206280 2014-02-23 14:22:29Z jgc $
 # Maintainer: Ionut Biru <ibiru@archlinux.org>
 
 pkgname=at-spi2-core
-pkgver=2.6.0
+pkgver=2.11.90
 pkgrel=1
 pkgdesc="Protocol definitions and daemon for D-Bus at-spi"
 arch=('i686' 'x86_64')
 url="http://www.gnome.org"
 license=('GPL2')
-depends=('dbus-core' 'glib2' 'libxtst')
+depends=('dbus' 'glib2' 'libxtst')
 makedepends=('intltool' 'gobject-introspection')
-options=('!libtool')
-source=(http://download.gnome.org/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
-sha256sums=('8d7e685c7cda6e2831b31c66ec796dc344c5eb29d8311f69b0a47529194ec559')
+source=(http://download.gnome.org/sources/$pkgname/${pkgver:0:4}/$pkgname-$pkgver.tar.xz)
+sha256sums=('32c71d38a7f4dd744d53d23e05c237ae3788f37d0d0ea55b72db90d232c6dbb7')
 
 build() {
   cd $pkgname-$pkgver
