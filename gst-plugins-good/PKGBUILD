@@ -1,40 +1,40 @@
-# $Id: PKGBUILD 153259 2012-03-12 16:05:31Z jgc $
+# $Id: PKGBUILD 205816 2014-02-10 13:12:32Z heftig $
 # Maintainer: Jan de Groot <jgc@archlinux.org>
 
-pkgbase=gst-plugins-good
-pkgname=('gst-plugins-good')
-pkgver=1.0.0
+pkgname=gst-plugins-good
+pkgver=1.2.3
 pkgrel=1
+pkgdesc="GStreamer Multimedia Framework Good Plugins"
 arch=('i686' 'x86_64')
 license=('LGPL')
-pkgdesc="GStreamer Multimedia Framework Good Plugins"
-depends=('gst-plugins-base>=1.0.0' 'bzip2' 'libavc1394' 'libiec61883' 'aalib' 'libshout' 'libdv' 'flac' 'gconf' 'wavpack' 'taglib' 'libsoup-gnome' 'v4l-utils' 'libcaca' 'libpng' 'libjpeg' 'jack' 'libpulse' 'udev')
-makedepends=('intltool' 'pkgconfig' 'gst-plugins-base>=1.0.0' 'libavc1394' 'libiec61883' 'aalib' 'libshout' 'libdv' 'flac' 'gconf' 'wavpack' 'taglib' 'libsoup-gnome' 'v4l-utils' 'libcaca' 'bzip2' 'gdk-pixbuf2' 'libpulse' 'jack' 'udev')
 url="http://gstreamer.freedesktop.org/"
-options=(!libtool !emptydirs)
-source=(${url}/src/gst-plugins-good/gst-plugins-good-${pkgver}.tar.xz)
-sha256sums=('f4684edb098d0d60b4a3d5a1fce846a4ba351f80adac4ba6e8199bd059f87886')
+depends=('libpulse' 'jack' 'libsoup' 'gst-plugins-base-libs' 'wavpack' 'aalib' 'taglib' 'libdv' 'libshout' 'libvpx' 'gdk-pixbuf2' 'libcaca' 'libavc1394' 'libiec61883' 'libxdamage' 'v4l-utils' 'cairo')
+makedepends=('gstreamer' 'speex' 'flac' 'libraw1394' 'python' 'gtk-doc')
+options=(!emptydirs)
+source=(${url}/src/$pkgname/$pkgname-$pkgver.tar.xz)
+sha256sums=('bfb33536a515bdcc34482f64b8d9cc3e47c753878b254923b419bc2f7485e470')
 
 build() {
-  cd "${srcdir}/gst-plugins-good-${pkgver}"
-  sed -i '/AC_PATH_XTRA/d' configure.ac
-  autoreconf
+  cd $pkgname-$pkgver
+
   ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
-    --disable-static --enable-experimental \
-    --with-package-name="GStreamer Good Plugins (Archlinux)" \
+    --disable-static --enable-experimental --enable-gtk-doc \
+    --with-package-name="GStreamer Good Plugins (Arch Linux)" \
     --with-package-origin="http://www.archlinux.org/"
+
+  # https://bugzilla.gnome.org/show_bug.cgi?id=655517
+  sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
 
   make
 }
 
-check() {
-  cd "${srcdir}/gst-plugins-good-${pkgver}"
-  make check
-}
+# Disabled for now: souphttpsrc times out, and takes a damn long time to do so
+#check() {
+#  cd $pkgname-$pkgver
+#  make check
+#}
 
 package() {
-  cd "${srcdir}/$pkgbase-${pkgver}"
+  cd $pkgname-$pkgver
   make DESTDIR="${pkgdir}" install
 }
-
-

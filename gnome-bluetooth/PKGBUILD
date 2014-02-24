@@ -1,22 +1,22 @@
-# $Id: PKGBUILD 167079 2012-09-25 09:40:56Z jgc $
+# $Id: PKGBUILD 198000 2013-10-30 12:11:19Z allan $
 # Maintainer: Ionut Biru <ibiru@archlinux.org>
 # Contributor: Roman Kyrylych <roman@archlinux.org>
 
 pkgname=gnome-bluetooth
-pkgver=3.5.92
+pkgver=3.10.0
 pkgrel=1
 pkgdesc="The GNOME Bluetooth Subsystem"
-arch=('i686' 'x86_64')
+arch=(i686 x86_64)
 url="http://live.gnome.org/GnomeBluetooth"
-license=('GPL' 'LGPL')
-depends=('gtk3' 'hicolor-icon-theme' 'gvfs-obexftp' 'obexd-client' 'dconf' 'libnotify')
-makedepends=('intltool' 'nautilus-sendto' 'gobject-introspection' 'itstool' 'docbook-xsl')
-options=('!libtool' '!emptydirs')
+license=(GPL LGPL)
+depends=(gtk3 hicolor-icon-theme libnotify bluez)
+makedepends=(intltool gobject-introspection itstool docbook-xsl)
+options=(!emptydirs)
 install=gnome-bluetooth.install
 source=(http://ftp.gnome.org/pub/GNOME/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz
         61-gnome-bluetooth-rfkill.rules)
-sha256sums=('bb832118364be36510d32e6e33e90788c0f651c82c146f9abd800403f0a235f8'
-            'b8acb8ea2e7f3588575cffd8ea14ec50c8641f518f2ea899771a508b299ea474')
+sha256sums=('7ee4ad464abfed59f04d1a471eb25cfb95fc34eeefbe4c47580dbb50df2ab712'
+            '8dd2d3637f380a89e72f65e6c8021e994ccbdc645f1a1b1dbffe74ac9f061f53')
 
 build() {
   cd $pkgname-$pkgver
@@ -26,6 +26,10 @@ build() {
     --disable-desktop-update \
     --disable-icon-update \
     --disable-schemas-compile
+
+  # https://bugzilla.gnome.org/show_bug.cgi?id=655517
+  sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+
   make
 }
 

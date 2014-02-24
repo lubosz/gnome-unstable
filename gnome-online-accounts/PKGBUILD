@@ -1,28 +1,31 @@
-# $Id: PKGBUILD 167051 2012-09-24 20:58:52Z jgc $
+# $Id: PKGBUILD 199428 2013-11-12 16:54:14Z heftig $
 # Maintainer: Ionut Biru <ibiru@archlinux.org>
 
 pkgname=gnome-online-accounts
-pkgver=3.6.0
+pkgver=3.10.2
 pkgrel=1
 pkgdesc="GNOME service to access online accounts"
 arch=(i686 x86_64)
 url="http://www.gnome.org"
 license=('GPL')
-depends=('webkitgtk3' 'json-glib' 'libnotify' 'rest' 'hicolor-icon-theme' 'libsecret')
+depends=('webkitgtk' 'json-glib' 'libnotify' 'rest' 'hicolor-icon-theme' 'libsecret'
+         'telepathy-glib' 'krb5' 'gcr')
 makedepends=('intltool' 'libxslt' 'gobject-introspection' 'docbook-xsl')
-options=(!libtool)
 install=$pkgname.install
-source=(http://download.gnome.org/sources/$pkgname/${pkgver:0:3}/$pkgname-$pkgver.tar.xz)
-sha256sums=('2a88772873935b1c23e8e6b7a2333d8cfb225755aba22e0977129f13351028f7')
+source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver:0:4}/$pkgname-$pkgver.tar.xz)
+sha256sums=('0b2418c1845337b6574a12d2075d319d8aaa5bbc4b0d1d123108c5da00e11b97')
 
 build() {
-  cd "$pkgname-$pkgver"
-  ./configure --prefix=/usr --libexec=/usr/lib/gnome-online-accounts
+  cd $pkgname-$pkgver
+  ./configure --prefix=/usr --libexecdir=/usr/lib/$pkgname --disable-static \
+    --enable-exchange --enable-facebook --enable-flickr \
+    --enable-google --enable-imap-smtp --enable-kerberos \
+    --enable-owncloud --enable-telepathy --enable-windows-live
   make
 }
 
 package() {
-  cd "$pkgname-$pkgver"
+  cd $pkgname-$pkgver
   make DESTDIR="$pkgdir" install
 }
 

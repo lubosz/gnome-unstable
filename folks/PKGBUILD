@@ -1,23 +1,25 @@
-# $Id: PKGBUILD 166885 2012-09-20 22:19:43Z jgc $
+# $Id: PKGBUILD 199902 2013-11-18 14:27:44Z heftig $
 # Maintainer: Ionut Biru <ibiru@archlinux.org>
 
 pkgname=folks
-pkgver=0.7.4.1
+pkgver=0.9.6
 pkgrel=1
 pkgdesc="Library to aggregates people into metacontacts"
 arch=(i686 x86_64)
 url="http://telepathy.freedesktop.org/wiki/Folks"
-license=('LGPL2.1')
-depends=('telepathy-glib' 'libgee' 'libxml2' 'evolution-data-server' 'libsocialweb' 'libzeitgeist')
-makedepends=('gobject-introspection' 'intltool')
+license=(LGPL2.1)
+depends=(telepathy-glib libgee libxml2 evolution-data-server zeitgeist libtracker-sparql)
+makedepends=(gobject-introspection intltool vala)
 install=folks.install
-options=('!libtool' '!emptydirs')
-source=(http://ftp.gnome.org/pub/GNOME/sources/$pkgname/${pkgver:0:3}/$pkgname-$pkgver.tar.xz)
-sha256sums=('424ca5ef0bebc12666465fe4ee557d374f4694348109443efe7832be949679d3')
+options=('!emptydirs')
+source=(http://ftp.gnome.org/pub/GNOME/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
+sha256sums=('a67e055b5a2724a34a80946e2940c4c0ad708cb1f4e0a09407c6b69a5e40267f')
 
 build() {
   cd "$pkgname-$pkgver"
-  ./configure --prefix=/usr --disable-schemas-compile
+  export PKG_CONFIG_PATH="${srcdir}/${pkgname}-${pkgver}/folks"
+  ./configure --prefix=/usr --disable-schemas-compile --enable-tracker-backend \
+    --disable-libsocialweb-backend --disable-fatal-warnings
   make
 }
 

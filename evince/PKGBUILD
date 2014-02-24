@@ -1,24 +1,28 @@
-# $Id: PKGBUILD 167083 2012-09-25 10:11:40Z jgc $
+# $Id: PKGBUILD 199791 2013-11-16 12:36:17Z heftig $
 # Maintainer: Jan de Groot <jgc@archlinux.org>
 
 pkgname=evince
-pkgver=3.6.0
+pkgver=3.10.3
 pkgrel=1
 pkgdesc="Simply a document viewer"
 url="http://projects.gnome.org/evince/"
-arch=('i686' 'x86_64')
-license=('GPL')
-depends=('gtk3' 'libgxps' 'libspectre' 'gsfonts' 'poppler-glib' 'djvulibre' 'gnome-icon-theme' 't1lib' 'libgnome-keyring' 'desktop-file-utils' 'dconf' 'gsettings-desktop-schemas')
-makedepends=('itstool' 'nautilus' 'texlive-bin' 'intltool' 'gobject-introspection' 'docbook-xsl')
-optdepends=('texlive-bin: DVI support')
-groups=('gnome-extra')
+arch=(i686 x86_64)
+license=(GPL)
+depends=(gtk3 libgxps libspectre gsfonts poppler-glib djvulibre gnome-icon-theme t1lib libsecret desktop-file-utils dconf gsettings-desktop-schemas)
+makedepends=(itstool libnautilus-extension texlive-bin intltool gobject-introspection docbook-xsl python)
+optdepends=('texlive-bin: DVI support'
+	    'gvfs: bookmark support and session saving'
+            'p7zip: cbz and cb7 compressed comic books'
+            'tar: cbt compressed comic books'
+            'unrar: cbr compressed comic books')
+groups=(gnome)
 install=evince.install
-options=('!libtool' '!emptydirs')
+options=('!emptydirs')
 source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
-sha256sums=('8dfa7b9c2f0b910d06b1612ff445d3f3050c44d25f2e78718966374d30ab83f2')
+sha256sums=('b30dcc3a93dd3c682325e685061c48ccd800835af49578f4db813bbaf5f5e9af')
 
 build() {
-  cd "$pkgname-$pkgver"
+  cd $pkgname-$pkgver
   ./configure --prefix=/usr   --sysconfdir=/etc \
       --localstatedir=/var    --libexecdir=/usr/lib/evince \
       --disable-static        --enable-nautilus \
@@ -31,6 +35,6 @@ build() {
 }
 
 package() {
-  cd "$pkgname-$pkgver"
+  cd $pkgname-$pkgver
   make DESTDIR="$pkgdir" install
 }

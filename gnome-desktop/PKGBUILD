@@ -1,31 +1,38 @@
-# $Id: PKGBUILD 167132 2012-09-25 21:08:02Z heftig $
+# $Id: PKGBUILD 204013 2014-01-14 08:11:43Z jgc $
 # Maintainer:  Jan de Groot <jan@archlinux.org>
 
 pkgname=gnome-desktop
-pkgver=3.6.0.1
+pkgver=3.10.2
 pkgrel=1
 epoch=1
 pkgdesc="Library with common API for various GNOME modules"
-arch=('i686' 'x86_64')
-license=('GPL' 'LGPL')
-depends=('gsettings-desktop-schemas>=3.5.91' 'gtk3>=3.3.6' 'xkeyboard-config')
-makedepends=('gnome-doc-utils' 'intltool' 'gobject-introspection' 'itstool')
+arch=(i686 x86_64)
+license=(GPL LGPL)
+depends=(gsettings-desktop-schemas gtk3 libxkbfile xkeyboard-config iso-codes)
+makedepends=(intltool gobject-introspection itstool)
 url="http://www.gnome.org"
-groups=('gnome')
-options=('!libtool')
-source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver::3}/$pkgname-$pkgver.tar.xz)
-sha256sums=('f3a3a7229426360d48677846bf7a674b12ef89b0a353044d7cc488c438d2ee5f')
+groups=(gnome)
+source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz
+        0001-GnomeRR-gnome_rr_output_get_min_backlight_step.patch)
+sha256sums=('d4f5944aea5f2a8c7c5dc0e738bf07f293dfff81ddc55a53d661370bf24e4632'
+            '5920cec531b03ebe0ce0941250ce62d92a7b18ae44900f11df90adb381858df2')
+
+prepare() {
+  cd $pkgname-$pkgver
+
+  # FS#37224
+  patch -Np1 -i ../0001-GnomeRR-gnome_rr_output_get_min_backlight_step.patch
+}
 
 build() {
-  cd "$pkgname-$pkgver"
-  ./configure --prefix=/usr --sysconfdir=/etc \
-      --localstatedir=/var --disable-static \
-      --libexecdir=/usr/lib/gnome-desktop \
-      --with-gnome-distributor="Arch Linux"
+  cd $pkgname-$pkgver
+  ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+    --libexecdir=/usr/lib/$pkgname --disable-static \
+    --with-gnome-distributor="Arch Linux"
   make
 }
 
 package() {
-  cd "$pkgname-$pkgver"
+  cd $pkgname-$pkgver
   make DESTDIR="$pkgdir" install
 }

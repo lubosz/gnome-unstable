@@ -1,27 +1,25 @@
-# $Id: $
-# Maintainer: Yangtse Su <yangtsesu@gmail.com>
+# $Id: PKGBUILD 198304 2013-10-30 14:03:06Z allan $
+# Maintainer: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgname=libzapojit
-pkgver=0.0.2
+pkgver=0.0.3
 pkgrel=1
 pkgdesc="GLib/GObject wrapper for the SkyDrive and Hotmail REST APIs"
 arch=('i686' 'x86_64')
-url="http://developer.gnome.org/libzapojit"
 license=('GPL')
-options=('!libtool')
-depends=('libsoup' 'rest' 'json-glib')
-makedepends=('gtk-doc')
-source=(http://ftp.gnome.org/pub/gnome/sources/libzapojit/0.0/$pkgname-$pkgver.tar.xz)
-md5sums=('2cdb9f15f2860ed4efff4d35a7e5929f')
+depends=('libsoup' 'gnome-online-accounts')
+makedepends=('intltool' 'gobject-introspection')
+url="http://www.gnome.org"
+source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
+sha256sums=('3d25f99329105abb99d1e9651b0aa1842065456ea54c22970a7330e9f3d1c37e')
 
 build() {
-    cd "$pkgname-$pkgver"
-
-    ./configure --prefix=/usr
-    make
+  cd "$pkgname-$pkgver"
+  ./configure --prefix=/usr --disable-static
+  make
 }
 
 package() {
-    cd "$pkgname-$pkgver"
-    make DESTDIR="$pkgdir" install
+  cd "$pkgname-$pkgver"
+  make DESTDIR="$pkgdir" install
 }

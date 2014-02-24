@@ -1,23 +1,24 @@
-# $Id: PKGBUILD 167311 2012-09-30 23:10:51Z heftig $
+# $Id: PKGBUILD 206111 2014-02-18 14:34:10Z heftig $
 # Maintainer: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgname=grilo
-pkgver=0.2.0
+pkgver=0.2.9
 pkgrel=1
 pkgdesc="Framework that provides access to various sources of multimedia content"
 url="http://www.gnome.org"
 arch=('i686' 'x86_64')
 license=('LGPL')
-depends=('gtk3' 'libxml2' 'libsoup')
-makedepends=('gobject-introspection' 'gtk-doc' 'vala')
+depends=('gtk3' 'libxml2' 'libsoup' 'liboauth' 'totem-plparser')
+makedepends=('gobject-introspection' 'gtk-doc' 'vala' 'intltool')
 optdepends=('grilo-plugins: Plugins for grilo')
-options=('!libtool' '!emptydirs')
+options=('!emptydirs')
 source=(http://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.xz)
-sha256sums=('daab3104684dd1a347aa3f3bc8e5a435f57829f594d951890692b9035c993d1f')
+sha256sums=('e51e937ae1ceee31d3f07fd459cd67e17d5c4497e32b30eb883830a0995df935')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
-  ./configure --prefix=/usr --sysconfdir=/etc --disable-static --disable-debug
+  ./configure --prefix=/usr --sysconfdir=/etc --disable-static --disable-debug \
+    --libdir=/usr/lib
   make
 }
 

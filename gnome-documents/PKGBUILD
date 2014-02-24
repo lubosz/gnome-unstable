@@ -1,21 +1,21 @@
-# $Id: PKGBUILD 159057 2012-05-15 11:15:31Z heftig $
+# $Id: PKGBUILD 199483 2013-11-13 12:08:21Z heftig $
 # Maintainer: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgname=gnome-documents
-pkgver=3.6.0
+pkgver=3.10.1
 pkgrel=1
 pkgdesc="Documents Manager for GNOME"
 arch=(i686 x86_64)
 url="http://www.gnome.org"
-license=('GPL')
-groups=('gnome-extra')
-depends=('clutter-gtk' 'evince' 'gjs' 'gtk3' 'gnome-desktop' 'gnome-online-accounts' 'libgdata' 'tracker' 'libzapojit')
-makedepends=('intltool')
+license=(GPL)
+groups=(gnome-extra)
+depends=(evince gjs gtk3 gnome-desktop gnome-online-accounts libgdata
+         tracker libzapojit webkitgtk gnome-online-miners)
+makedepends=(intltool gobject-introspection itstool docbook-xsl)
 optdepends=('unoconv: Support for Libreoffice document types')
-options=('!libtool')
 install=gnome-documents.install
 source=(http://download.gnome.org/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
-sha256sums=('a4a5c525cba047a6c8f712f8a0d73fc26dc0445d4c8278c10ecbeac4efd342e2')
+sha256sums=('26f8234fa74c00afb323f76de7028655b82d285acce057dd07b6ed98943951b2')
 
 build() {
   cd $pkgname-$pkgver
@@ -23,8 +23,14 @@ build() {
     --prefix=/usr \
     --sysconfdir=/etc \
     --localstatedir=/var \
-    --libexecdir=/usr/lib/gnome-documents
+    --libexecdir=/usr/lib/$pkgname
   make
+}
+
+
+check() {
+  cd $pkgname-$pkgver
+  make check
 }
 
 package() {

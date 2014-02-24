@@ -1,34 +1,26 @@
-# $Id: PKGBUILD 167252 2012-09-29 12:13:31Z heftig $
+# $Id: PKGBUILD 198373 2013-10-30 14:28:32Z allan $
 # Maintainer: Jan de Groot <jgc@archlinux.org>
 
 pkgname=polkit
-pkgver=0.107
-pkgrel=4
+pkgver=0.112
+pkgrel=1
 pkgdesc="Application development toolkit for controlling system-wide privileges"
 arch=(i686 x86_64)
-license=('LGPL')
-url="http://www.freedesktop.org/wiki/Software/PolicyKit"
-depends=('glib2' 'pam' 'expat' 'libsystemd' 'js')
-makedepends=('intltool' 'gtk-doc' 'gobject-introspection')
-replaces=('policykit')
-options=('!libtool')
+license=(LGPL)
+url="http://www.freedesktop.org/wiki/Software/polkit"
+depends=(glib2 pam expat libsystemd js)
+makedepends=(intltool gtk-doc gobject-introspection)
 install=polkit.install
 source=(http://www.freedesktop.org/software/polkit/releases/$pkgname-$pkgver.tar.gz
-        polkit.pam fix-empty-wheel.patch)
-md5sums=('0e4f9c53f43fd1b25ac3f0d2e09b2ae1'
-         '6564f95878297b954f0572bc1610dd15'
-         'c99ab2a7919ad0b69fde4804c043b07f')
+        polkit.pam)
 
 build() {
   cd $pkgname-$pkgver
 
-  # https://bugs.archlinux.org/task/31717
-  patch -Np1 -i ../fix-empty-wheel.patch
-
   ./configure --prefix=/usr --sysconfdir=/etc \
       --localstatedir=/var --libexecdir=/usr/lib/polkit-1 \
-      --with-systemdsystemunitdir=/usr/lib/systemd/system \
-      --disable-static --enable-gtk-doc
+      --enable-libsystemd-login=yes --disable-static \
+      --enable-gtk-doc
   make
 }
 
@@ -41,3 +33,5 @@ package() {
 
   install -m644 "$srcdir/polkit.pam" "$pkgdir/etc/pam.d/polkit-1"
 }
+md5sums=('b0f2fa00a55f47c6a5d88e9b73f80127'
+         '6564f95878297b954f0572bc1610dd15')

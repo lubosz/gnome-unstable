@@ -1,20 +1,20 @@
-# $Id: PKGBUILD 167242 2012-09-29 09:23:38Z ibiru $
+# $Id: PKGBUILD 198696 2013-11-02 08:04:56Z ioni $
 # Maintainer:  Ionut Biru <ibiru@archlinux.org>
 # Contributor: Kessia 'even' Pinheiro <kessiapinheiro at gmail.com
 # Contributor: Bjorn Lindeijer <bjorn lindeijer nl>
 
 pkgname=telepathy-glib
-pkgver=0.19.10
+pkgver=0.22.0
 pkgrel=1
 pkgdesc="GLib bindings for the Telepathy D-Bus protocol"
 arch=('i686' 'x86_64')
 url="http://telepathy.freedesktop.org"
 license=('LGPL2.1')
-options=('!libtool' '!emptydirs')
+options=('!emptydirs')
 depends=('dbus-glib')
 makedepends=('libxslt' 'vala' 'gobject-introspection')
 source=(http://telepathy.freedesktop.org/releases/$pkgname/$pkgname-$pkgver.tar.gz)
-md5sums=('fbe730cc897c2d6cbf6a165d6cc63cdd')
+md5sums=('c333ceb21a9ca1c52a0e6e36432943d1')
 
 build() {
     cd $pkgname-$pkgver

@@ -1,50 +1,53 @@
-# $Id: PKGBUILD 153256 2012-03-12 15:48:30Z jgc $
+# $Id: PKGBUILD 205815 2014-02-10 13:12:18Z heftig $
 # Maintainer: Jan de Groot <jgc@archlinux.org>
 
 pkgbase=gst-plugins-base
 pkgname=('gst-plugins-base-libs' 'gst-plugins-base')
-pkgver=1.0.0
+pkgver=1.2.3
 pkgrel=1
+pkgdesc="GStreamer Multimedia Framework Base Plugins"
 arch=('i686' 'x86_64')
 license=('LGPL')
 makedepends=('pkgconfig' 'gstreamer' 'orc' 'libxv' 'alsa-lib' 'cdparanoia' 'libvisual' 'libvorbis' 'libtheora' 'pango' 'gobject-introspection')
-options=(!libtool !emptydirs)
+options=(!emptydirs)
 url="http://gstreamer.freedesktop.org/"
 source=(${url}/src/$pkgbase/$pkgbase-${pkgver}.tar.xz)
-sha256sums=('4b98a74712e31d5426dd1cf2de883b6af59fd37997b0ffaed53914eb6df45053')
+sha256sums=('61edec35c270f86928bad434bd059da4efff865d1ef01bcc64ecbd903625dae1')
 
 build() {
-  cd "${srcdir}/$pkgbase-${pkgver}"
-  sed -i '/AC_PATH_XTRA/d' configure.ac
-  autoreconf
+  cd $pkgbase-$pkgver
+
   ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
     --disable-static --enable-experimental \
-    --with-package-name="GStreamer Base Plugins (Archlinux)" \
+    --with-package-name="GStreamer Base Plugins (Arch Linux)" \
     --with-package-origin="http://www.archlinux.org/"
 
+  # https://bugzilla.gnome.org/show_bug.cgi?id=655517
+  sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+
   make
+
   sed -e 's/^SUBDIRS_EXT =.*/SUBDIRS_EXT =/' -i Makefile
 }
 
 check() {
-  cd "${srcdir}/gst-plugins-base-${pkgver}"
+  cd $pkgbase-$pkgver
   # Testsuite fails on one test. Some refcount leak
-  #make check
+  make check
 }
 
 package_gst-plugins-base-libs() {
-  pkgdesc="GStreamer Multimedia Framework Base plugin libraries"
+  pkgdesc="GStreamer Multimedia Framework Base Plugin libraries"
   depends=('gstreamer' 'orc' 'libxv')
 
-  cd "${srcdir}/$pkgbase-${pkgver}"
+  cd $pkgbase-$pkgver
   make DESTDIR="${pkgdir}" install
 }
 
 package_gst-plugins-base() {
-  pkgdesc="GStreamer Multimedia Framework Base Plugins (gst-plugins-base)"
   depends=("gst-plugins-base-libs=$pkgver" 'alsa-lib' 'cdparanoia' 'libvisual' 'libvorbis' 'libtheora' 'pango')
 
-  cd "${srcdir}/$pkgbase-${pkgver}"
+  cd $pkgbase-$pkgver
   make -C gst-libs DESTDIR="${pkgdir}" install
   make -C ext DESTDIR="${pkgdir}" install
   make -C gst-libs DESTDIR="${pkgdir}" uninstall

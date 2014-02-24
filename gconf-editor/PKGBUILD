@@ -1,23 +1,25 @@
-# $Id: PKGBUILD 150859 2012-02-23 13:04:28Z ibiru $
+# $Id: PKGBUILD 195993 2013-10-07 08:23:35Z jgc $
 # Maintainer: Jan de Groot <jgc@archlinux.org>
 
 pkgname=gconf-editor
 pkgver=3.0.1
-pkgrel=2
+pkgrel=3
 pkgdesc="Graphical gconf registry editor"
 arch=(i686 x86_64)
 license=('GPL')
-depends=('gconf' 'hicolor-icon-theme')
+depends=('gconf' 'hicolor-icon-theme' 'gtk3')
 makedepends=('pkgconfig' 'intltool' 'gnome-doc-utils')
 url="http://www.gnome.org"
-groups=('gnome-extra')
 options=(!emptydirs)
 install=gconf-editor.install
-source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.bz2)
-sha256sums=('9afc4fc0d0afe019998736f06c04cbfa0393c813e2aa755133d95e83835f8869')
+source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.bz2
+        fix-assertion-failed-crash.patch)
+sha256sums=('9afc4fc0d0afe019998736f06c04cbfa0393c813e2aa755133d95e83835f8869'
+            '6550714ee06d09632244d0f4f41402224599f5230ef71376ea34291ce0d651bc')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
+  patch -Np1 -i "${srcdir}/fix-assertion-failed-crash.patch"
   ./configure --prefix=/usr --sysconfdir=/etc \
      --localstatedir=/var --disable-scrollkeeper
   make

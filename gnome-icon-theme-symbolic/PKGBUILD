@@ -1,20 +1,20 @@
-# $Id: PKGBUILD 166432 2012-09-07 18:25:51Z jgc $
+# $Id: PKGBUILD 196500 2013-10-14 14:05:19Z heftig $
 # Maintainer: Jan "heftig" Steffens <jan.steffens@gmail.com>
 # Contributor: Ionut Biru <ibiru@archlinux.org>
 
 pkgname=gnome-icon-theme-symbolic
-pkgver=3.6.0
+pkgver=3.10.1
 pkgrel=1
 pkgdesc="GNOME icon theme, symbolic icons"
 arch=(any)
-depends=('gtk-update-icon-cache' 'icon-naming-utils' 'hicolor-icon-theme')
-makedepends=('intltool')
+depends=(gtk-update-icon-cache icon-naming-utils hicolor-icon-theme librsvg)
+makedepends=(intltool)
 url="http://www.gnome.org"
-license=('GPL')
+license=(GPL)
 install=gnome-icon-theme-symbolic.install
-groups=('gnome')
-source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver:0:3}/$pkgname-$pkgver.tar.xz)
-sha256sums=('c6d61e157ad753e5f03874617dc19d2fda8e4e626c7434a6c61d84d120dfb31b')
+groups=(gnome)
+source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
+sha256sums=('344e88e5f9dac3184bf012d9bac972110df2133b93d76f2ad128d4c9cbf41412')
 
 build() {
   cd "$pkgname-$pkgver"

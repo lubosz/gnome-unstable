@@ -1,26 +1,29 @@
-# $Id: PKGBUILD 167069 2012-09-25 09:09:57Z jgc $
+# $Id: PKGBUILD 201444 2013-12-11 19:01:51Z heftig $
 # Maintainer: Jan de Groot <jgc@archlinux.org>
 
 pkgname=epiphany
-pkgver=3.6.0
+pkgver=3.10.3
 pkgrel=1
 install=epiphany.install
 pkgdesc="A GNOME web browser based on the WebKit rendering engine."
 arch=('i686' 'x86_64')
 license=('GPL')
-depends=('libsoup-gnome' 'libnotify' 'gsettings-desktop-schemas' 'webkitgtk3' 'nss' 'iso-codes' 'dconf' 'gobject-introspection' 'desktop-file-utils'
-         'hicolor-icon-theme' 'gcr' 'gnome-desktop')
-makedepends=('intltool' 'gnome-doc-utils' 'startup-notification')
-options=('!libtool' '!emptydirs')
+depends=('libsoup' 'libnotify' 'gsettings-desktop-schemas' 'webkitgtk' 'nss' 'iso-codes' 'dconf' 'desktop-file-utils' 'gnome-icon-theme-symbolic' 'gcr' 'gnome-desktop' 'libwnck3' 'gnome-themes-standard')
+makedepends=('intltool' 'itstool' 'docbook-xml' 'startup-notification' 'gobject-introspection')
+options=('!emptydirs')
 groups=('gnome')
 url="http://www.gnome.org/projects/epiphany/"
-source=(http://ftp.gnome.org/pub/GNOME/sources/$pkgname/${pkgver:0:3}/$pkgname-$pkgver.tar.xz)
-sha256sums=('54458b220e5f320b93f2f59840971627f43f2aa6b1ff5fa3e6a8fad5deef2207')
+source=(http://ftp.gnome.org/pub/GNOME/sources/$pkgname/${pkgver:0:4}/$pkgname-$pkgver.tar.xz)
+sha256sums=('c18235ecceaa9c76e7d90d370861cb2bba45019e1e14391a00dac3d2e94a0db7')
 
 build() {
   cd $pkgname-$pkgver
   ./configure --prefix=/usr --sysconfdir=/etc \
       --localstatedir=/var
+
+  # https://bugzilla.gnome.org/show_bug.cgi?id=655517
+  sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+
   make
 }
 

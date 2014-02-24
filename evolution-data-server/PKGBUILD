@@ -1,30 +1,26 @@
-# $Id: PKGBUILD 167055 2012-09-24 21:09:48Z jgc $
+# $Id: PKGBUILD 205805 2014-02-10 12:27:15Z heftig $
 # Maintainer: Jan de Groot <jgc@archlinux.org>
 
 pkgname=evolution-data-server
-pkgver=3.6.0
+pkgver=3.10.4
 pkgrel=1
 pkgdesc="Centralized access to appointments and contacts"
-arch=('i686' 'x86_64')
-depends=('gnome-online-accounts' 'nss' 'krb5' 'libgweather>=3.5.0' 'libical' 'db' 'libgdata')
-makedepends=('intltool' 'gperf' 'gobject-introspection' 'vala')
-options=('!libtool')
+arch=(i686 x86_64)
+depends=(gnome-online-accounts nss krb5 libgweather libical db libgdata)
+makedepends=(intltool gperf gobject-introspection vala python2)
 install=$pkgname.install
 url="http://www.gnome.org"
-license=('GPL')
+license=(GPL)
 source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
-sha256sums=('50a7dd1a8109aefa748e6ba7b6469bb5bf8739b30a197c495db516703f3aaba8')
+sha256sums=('5c2d5e19af19ecfa81f31306411ab6155c3c62cf407d5a5aaa675a8ce940fa2d')
 
 build() {
   cd "$pkgname-$pkgver"
-  
-  sed -i -e 's/env python/python2/' addressbook/libebook/gen-western-table.py
-  
-  PYTHON=/usr/bin/python2 ./configure --prefix=/usr --sysconfdir=/etc \
+  ./configure --prefix=/usr --sysconfdir=/etc \
       --localstatedir=/var --with-openldap=yes \
       --libexecdir=/usr/lib/evolution-data-server \
       --with-krb5=/usr --with-libdb=/usr \
-      --enable-vala-bindings
+      --enable-vala-bindings --disable-uoa
   sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0 /g' -e 's/    if test "$export_dynamic" = yes && test -n "$export_dynamic_flag_spec"; then/      func_append compile_command " -Wl,-O1,--as-needed"\n      func_append finalize_command " -Wl,-O1,--as-needed"\n\0/' libtool
   make
 }

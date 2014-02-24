@@ -1,7 +1,8 @@
-# $Id: PKGBUILD 167175 2012-09-26 18:55:05Z jgc $
+# $Id: PKGBUILD 198008 2013-10-30 12:14:08Z allan $
 # Maintainer: Ionut Biru <ibiru@archlinux.org>
+
 pkgname=gnome-dictionary
-pkgver=3.6.0
+pkgver=3.10.0
 pkgrel=1
 pkgdesc="Look up words in dictionary sources"
 arch=(i686 x86_64)
@@ -10,19 +11,18 @@ license=('GPL2')
 depends=('dconf' 'gtk3')
 makedepends=('intltool' 'itstool' 'docbook-xsl')
 install=$pkgname.install
-options=(!libtool)
-groups=('gnome-extra')
+groups=('gnome')
 source=(http://download.gnome.org/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
-sha256sums=('1ad03f629bbfe4360fc6d8dd2d7cb4a03e24579068bdd79a25ff5fc5fbff6fa9')
+sha256sums=('258b60fe50f7d0580a7dc3bb83f7fe2f6f0597d4013d97ac083c3f062c350ed7')
 
 build() {
-  cd "$pkgname-$pkgver"
+  cd $pkgname-$pkgver
   ./configure --prefix=/usr
   make
 }
 
 package() {
-  cd "$pkgname-$pkgver"
+  cd $pkgname-$pkgver
   make DESTDIR="$pkgdir" install
 }
 

@@ -1,30 +1,31 @@
-# $Id: PKGBUILD 159049 2012-05-15 11:05:32Z heftig $
+# $Id: PKGBUILD 200777 2013-12-04 22:00:35Z jgc $
 # Maintainer: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 # Contributor: Jan de Groot <jgc@archlinux.org>
 
 pkgname=cheese
-pkgver=3.6.0
-pkgrel=1
+pkgver=3.10.2
+pkgrel=2
 pkgdesc="Use your webcam to take photos and videos, apply fancy special effects and share the fun with others"
 arch=(i686 x86_64)
 license=('GPL')
-depends=('gnome-desktop' 'gtk3' 'libcanberra' 'librsvg' 'gstreamer0.10-base-plugins'
-         'gstreamer0.10-good-plugins' 'gstreamer0.10-bad' 'clutter-gst' 'clutter-gtk' 'mx' 'libgee'
-         'gnome-video-effects' 'hicolor-icon-theme' 'dconf' 'cogl')
-makedepends=('pkgconfig' 'gnome-doc-utils' 'intltool' 'gobject-introspection' 'itstool'
-             'nautilus-sendto')
-optdepends=('nautilus-sendto: Send images')
+depends=('gtk3' 'gstreamer' 'gst-plugins-bad' 'gst-plugins-base' 'gst-plugins-good' 'clutter-gst' 'clutter-gtk' 'libcanberra' 'gnome-video-effects' 'librsvg' 'gnome-desktop')
+makedepends=('pkgconfig' 'intltool' 'gobject-introspection' 'itstool' 'vala')
+optdepends=('frei0r-plugins: More camera effects')
 groups=('gnome-extra')
-options=('!libtool' '!emptydirs')
+options=('!emptydirs')
 url="http://www.gnome.org/projects/cheese/"
 install=cheese.install
-source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
-sha256sums=('f0872c6c276fabf054e37e427cb4a4174351a439ebfae7431ecc09a1837e9a80')
+source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver:0:4}/$pkgname-$pkgver.tar.xz)
+sha256sums=('3e5f4ac078bac60571ff61bc2cd451349d78e01ecaaff031da16fe29ff094945')
 
 build() {
   cd $pkgname-$pkgver
   ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
       --disable-static --disable-schemas-compile
+
+  # https://bugzilla.gnome.org/show_bug.cgi?id=655517
+  sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+
   make
 }
 

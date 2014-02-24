@@ -1,31 +1,35 @@
-# $Id: PKGBUILD 167003 2012-09-24 17:47:48Z jgc $
-# Maintainer: Jan "heftig" Steffens <jan.steffens@gmail.com>
+# $Id: PKGBUILD 199408 2013-11-11 23:20:22Z heftig $
+# Maintainer: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgname=glib-networking
-pkgver=2.34.0
+pkgver=2.38.2
 pkgrel=1
 pkgdesc="Network-related giomodules for glib"
-arch=('i686' 'x86_64')
+arch=(i686 x86_64)
 url="http://www.gtk.org/"
-license=('GPL2')
-depends=('glib2' 'libproxy' 'gnutls' 'ca-certificates' 'gsettings-desktop-schemas')
-makedepends=('intltool')
-options=('!libtool')
+license=(GPL2)
+depends=(glib2 libproxy gnutls ca-certificates gsettings-desktop-schemas)
+makedepends=(intltool)
 install=glib-networking.install
 source=(http://download.gnome.org/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
-sha256sums=('c56eb4161671bff9568f3a92a88531ca01217eb7ee8514bb6255730400f877f1')
+sha256sums=('e8e2fe919d3236169c9bfaec807966ec81b844fc28b11bddc9f8256cfa949fc7')
 
 build() {
-  cd "$pkgname-$pkgver"
-  ./configure \
-    --prefix=/usr --sysconfdir=/etc \
-    --libexecdir=/usr/lib/glib-networking --disable-static
+  cd $pkgname-$pkgver
+  ./configure --prefix=/usr --sysconfdir=/etc \
+    --libexecdir=/usr/lib/$pkgname --disable-static \
+    --disable-installed-tests
   make
 }
 
+check() {
+  cd $pkgname-$pkgver
+  make -k check
+}
+
 package() {
-  cd "$pkgname-$pkgver"
-  make DESTDIR="$pkgdir" install
+  cd $pkgname-$pkgver
+  make DESTDIR="$pkgdir" install testfiles_DATA=
 }
 
 # vim:set ts=2 sw=2 et:

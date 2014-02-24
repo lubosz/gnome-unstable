@@ -1,36 +1,33 @@
-# $Id: PKGBUILD 167313 2012-09-30 23:18:47Z heftig $
+# $Id: PKGBUILD 206113 2014-02-18 14:55:38Z heftig $
 # Maintainer: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgname=grilo-plugins
-pkgver=0.2.0
+pkgver=0.2.11
 pkgrel=1
 pkgdesc="Plugins for Grilo"
 url="http://www.gnome.org"
-arch=('i686' 'x86_64')
-license=('LGPL')
-depends=('grilo')
-makedepends=(gupnp-av libgdata libquvi sqlite gmime libgcrypt rest libtracker-sparql
-             totem-plparser gnome-common)
+arch=(i686 x86_64)
+license=(LGPL)
+depends=(grilo sqlite libgcrypt)
+makedepends=(gupnp-av libgdata gmime libtracker-sparql libdmapsharing
+             json-glib intltool avahi itstool)
 optdepends=('gupnp-av: uPnP plugin'
             'libgdata: Youtube plugin'
-            'libquvi: Youtube plugin'
-            'sqlite: Podcasts plugin'
+            'gnome-online-accounts: Flickr plugin'
             'gmime: Podcasts plugin'
-            'sqlite: Bookmarks plugin'
-            'sqlite: Metadata store plugin'
-            'libgcrypt: Vimeo plugin'
-            'rest: Blip.tv plugin'
             'libtracker-sparql: Tracker plugin'
-            'totem-plparser: Optical media plugin')
-options=('!libtool' '!emptydirs')
+            'libdmapsharing: DMAP sharing plugin'
+            'json-glib: TMDb plugin'
+            'avahi: Freebox plugin')
+options=('!emptydirs')
+groups=('gnome')
 source=(http://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.xz)
-sha256sums=('86ecabe5b34a15e9c00285b599461e7eb590e2fff0a8b284157b789b192db4f7')
+sha256sums=('a2ac4ad28f3ead53d00d99653b2fb2d19cd5d9cfc33a16e7e82477223d089944')
 
 build() {
   cd $pkgname-$pkgver
-  
   ./configure --prefix=/usr --sysconfdir=/etc --disable-static \
-    --enable-shoutcast
+    --enable-shoutcast --disable-pocket
   make
 }
 

@@ -1,25 +1,25 @@
-# $Id: PKGBUILD 166892 2012-09-20 22:54:41Z jgc $
+# $Id: PKGBUILD 201363 2013-12-09 13:42:13Z jgc $
 # Maintainer: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 # Contributor: Jan de Groot <jgc@archlinux.org>
 
 pkgname=eog
-pkgver=3.6.0
-pkgrel=1
+pkgver=3.10.2
+pkgrel=2
 pkgdesc="Eye of Gnome: An image viewing and cataloging program"
-arch=('i686' 'x86_64')
-license=('GPL')
-depends=('gnome-desktop' 'libexif' 'lcms2' 'desktop-file-utils' 'exempi' 'libpeas' 'librsvg' 'gnome-icon-theme' 'dconf')
-makedepends=('gtk-doc' 'intltool' 'itstool')
+arch=(i686 x86_64)
+license=(GPL)
+depends=(gnome-desktop libexif lcms2 desktop-file-utils exempi libpeas librsvg gnome-icon-theme dconf)
+makedepends=(gtk-doc intltool itstool)
 install=eog.install
-groups=('gnome-extra')
-options=('!emptydirs' '!libtool')
+groups=(gnome)
+options=('!emptydirs')
 url="http://www.gnome.org"
-source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
-sha256sums=('8f8e43a337a3fb7071c650078f2ef89567b4889527f300d053491e9185dbae6b')
+source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver:0:4}/$pkgname-$pkgver.tar.xz)
+sha256sums=('5ccc98609ca666420719383cc7d9b44335bbc0aacf048e38036d1f946ce54763')
 
 build() {
   cd "$pkgname-$pkgver"
-  PYTHON=/usr/bin/python2 ./configure --prefix=/usr --sysconfdir=/etc \
+  ./configure --prefix=/usr --sysconfdir=/etc \
       --localstatedir=/var
   make
 }
@@ -27,7 +27,4 @@ build() {
 package() {
   cd "$pkgname-$pkgver"
   make DESTDIR="$pkgdir" install
-
-  # remove it from Xfce menu that ships its own thingy
-  echo "NotShowIn=XFCE" >> $pkgdir/usr/share/applications/eog.desktop
 }

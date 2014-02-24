@@ -1,36 +1,42 @@
-# $Id: PKGBUILD 160767 2012-06-05 08:51:43Z jgc $
+# $Id: PKGBUILD 205817 2014-02-10 13:12:46Z heftig $
 # Maintainer: Jan de Groot <jgc@archlinux.org>
 
-pkgbase=gst-plugins-bad
-pkgname=('gst-plugins-bad')
-pkgver=1.0.0
+pkgname=gst-plugins-bad
+pkgver=1.2.3
 pkgrel=1
-arch=('i686' 'x86_64')
-license=('LGPL' 'GPL')
 pkgdesc="GStreamer Multimedia Framework Bad Plugins"
-depends=('gst-plugins-base>=1.0.0')
-makedepends=('pkgconfig' 'gst-plugins-base>=1.0.0' 'xvidcore' 'libdca' 'bzip2' 'libdc1394' 'neon' 'faac' 'musicbrainz' 'faad2' 'libmms' 'libcdaudio' 'libmpcdec' 'mjpegtools' 'libdvdnav' 'libmodplug' 'jasper' 'liblrdf' 'libofa' 'soundtouch' 'libvdpau' 'schroedinger' 'libass' 'libvpx' 'gsm' 'libgme' 'rtmpdump' 'libsndfile' 'librsvg' 'wildmidi')
+arch=('i686' 'x86_64')
+license=('LGPL')
 url="http://gstreamer.freedesktop.org/"
-options=(!libtool !emptydirs)
-source=(${url}/src/gst-plugins-bad/gst-plugins-bad-${pkgver}.tar.xz)
-sha256sums=('9af78a20a535687bfbb58128713376f3f5ae670af8afb3be4285713557c2381b')
+depends=('mjpegtools' 'gst-plugins-base-libs' 'curl' 'chromaprint' 'libmms' 'faad2' 'mpg123' 'faac' 'celt' 'libdca' 'soundtouch' 'spandsp' 'libdvdnav' 'libmodplug' 'libgme' 'opus' 'wayland' 'neon' 'libofa' 'fluidsynth' 'openjpeg' 'libwebp' 'libsrtp' 'gnutls' 'wildmidi')
+makedepends=('schroedinger' 'libexif' 'libdvdread' 'libvdpau' 'libmpeg2' 'python' 'valgrind' 'wildmidi' 'librsvg'
+             'gobject-introspection' 'gtk-doc')
+options=(!emptydirs)
+source=(${url}/src/$pkgname/$pkgname-$pkgver.tar.xz)
+sha256sums=('595d7911a9e6207dea37200587724bdbf841b81a5eb0730118be36976684278c')
 
 build() {
-  cd "${srcdir}/gst-plugins-bad-${pkgver}"
+  cd $pkgname-$pkgver
+
   ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
-    --disable-static --enable-experimental \
-    --with-package-name="GStreamer Bad Plugins (Archlinux)" \
-    --with-package-origin="http://www.archlinux.org/"
+    --disable-static --enable-experimental --enable-gtk-doc \
+    --with-package-name="GStreamer Bad Plugins (Arch Linux)" \
+    --with-package-origin="http://www.archlinux.org/" \
+    --with-gtk=3.0
+
+  # https://bugzilla.gnome.org/show_bug.cgi?id=655517
+  sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+
   make
 }
 
-# Disable for now: 2 tests fail, one of them is because of not having a camera during build.
-#check() {
-#  cd "${srcdir}/gst-plugins-bad-${pkgver}"
-#  make check
-#}
+check() {
+  cd $pkgname-$pkgver
+  # don't have a camera for the camerabin test
+  make -k check || :
+}
 
 package() {
-  cd "${srcdir}/gst-plugins-bad-${pkgver}"
+  cd $pkgname-$pkgver
   make DESTDIR="${pkgdir}" install
 }

@@ -1,8 +1,8 @@
-# $Id: PKGBUILD 167044 2012-09-24 20:43:36Z jgc $
+# $Id: PKGBUILD 199924 2013-11-19 03:50:58Z heftig $
 # Maintainer: Ionut Biru <ibiru@archlinux.org>
 
 pkgname=gnome-screenshot
-pkgver=3.6.0
+pkgver=3.10.1
 pkgrel=1
 pkgdesc="Take pictures of your screen"
 arch=(i686 x86_64)
@@ -10,10 +10,10 @@ url="http://gnome.org"
 license=('GPL2')
 depends=('dconf' 'gtk3' 'libcanberra')
 makedepends=('intltool')
-groups=('gnome-extra')
+groups=('gnome')
 install=$pkgname.install
 source=(http://download.gnome.org/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
-sha256sums=('96626b86d0ebaacf420b68ddd846d5185dc90a58e5d86843799c2071255b7636')
+sha256sums=('9a4ed8821187e5a6923245508df4c116f28278b3089580eb2c4e6d32d178ba68')
 
 build() {
   cd "$pkgname-$pkgver"

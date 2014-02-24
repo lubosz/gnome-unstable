@@ -1,26 +1,31 @@
-# $Id: PKGBUILD 167165 2012-09-26 17:56:40Z jgc $
+# $Id: PKGBUILD 201378 2013-12-10 10:09:05Z heftig $
 # Maintainer: Jan de Groot <jgc@archlinux.org>
 
 pkgname=zenity
-pkgver=3.6.0
+pkgver=3.10.2
 pkgrel=1
 pkgdesc="Display graphical dialog boxes from shell scripts"
 arch=(i686 x86_64)
-license=('LGPL')
-depends=('gtk3' 'libnotify')
-makedepends=('intltool' 'gtk-doc' 'itstool' 'docbook-xsl')
+license=(LGPL)
+depends=(gtk3 libnotify)
+makedepends=(intltool gtk-doc itstool docbook-xsl git gnome-common yelp-tools)
 url="http://www.gnome.org"
-source=(http://ftp.gnome.org/pub/gnome/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.xz)
-sha256sums=('5de4ebbb6888ad4928fa9eebcd42dbe5bb282bee9dd7dd21475d9eaa854c74be')
+source=(git://git.gnome.org/zenity#tag=ZENITY_${pkgver//./_})
+sha256sums=('SKIP')
+
+prepare() {
+  cd $pkgname
+  git cherry-pick -n 80bc8ce643979fec201c4ebd5cd6405b6310357f
+}
 
 build() {
-  cd $pkgname-$pkgver
-  ./configure --prefix=/usr --sysconfdir=/etc \
+  cd $pkgname
+  ./autogen.sh --prefix=/usr --sysconfdir=/etc \
       --localstatedir=/var
   make
 }
 
 package() {
-  cd $pkgname-$pkgver
+  cd $pkgname
   make DESTDIR="${pkgdir}" install
 }

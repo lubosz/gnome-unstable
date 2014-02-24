@@ -1,29 +1,31 @@
-# $Id: PKGBUILD 167038 2012-09-24 20:24:43Z jgc $
+# $Id: PKGBUILD 199386 2013-11-11 21:56:27Z heftig $
 # Maintainer: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 # Contributor: Jan de Groot <jgc@archlinux.org>
 
 pkgname=file-roller
-pkgver=3.6.0
+pkgver=3.10.2.1
 pkgrel=1
-pkgdesc="Archive manipulator for GNOME"
+pkgdesc="Create and modify archives"
 arch=('i686' 'x86_64')
 license=('GPL')
-depends=('desktop-file-utils' 'gtk3' 'hicolor-icon-theme' 'dconf' 'libarchive' 'file' 'json-glib')
-makedepends=('intltool' 'gnome-doc-utils' 'pkg-config' 'nautilus' 'itstool' 'docbook-xsl')
-optdepends=('unrar: the RAR uncompression program'
-            'zip: creates PKZIP-compatible .zip files'
-            'p7zip: 7zip compression utility'
-            'arj: ARJ archiver'
+depends=('desktop-file-utils' 'gtk3' 'hicolor-icon-theme' 'dconf' 'libarchive' 'file' 'json-glib' 'libnotify' 'p7zip')
+makedepends=('intltool' 'gnome-doc-utils' 'pkg-config' 'libnautilus-extension' 'itstool' 'docbook-xsl')
+optdepends=('lrzip: lrzip archive support'
             'unace: extraction tool for the proprietary ace archive format')
 groups=('gnome-extra')
-options=('!libtool' '!emptydirs')
+options=('!emptydirs')
 install=file-roller.install
 url="http://www.gnome.org"
-source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
-sha256sums=('01771788c673b2db323fae1eee766ceb3342d815a4f2cba839b662c2ea56918d')
+source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver:0:4}/$pkgname-$pkgver.tar.xz)
+sha256sums=('fde1104103df71c126e759089f12dc7fa25ec642308649e87d542ee7c3276790')
+
+prepare() {
+  cd $pkgname-$pkgver
+}
 
 build() {
   cd $pkgname-$pkgver
+
   ./configure --prefix=/usr --sysconfdir=/etc \
       --libexecdir=/usr/lib/file-roller \
       --localstatedir=/var --disable-static \
