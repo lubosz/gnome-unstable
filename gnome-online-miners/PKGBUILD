@@ -1,0 +1,26 @@
+# $Id: PKGBUILD 204482 2014-01-20 20:34:48Z heftig $
+# Maintainer: Ionut Biru <ibiru@archlinux.org>
+
+pkgname=gnome-online-miners
+pkgver=3.10.3
+pkgrel=1
+pkgdesc="Tracker miners for online accounts"
+arch=(i686 x86_64)
+url="http://www.gnome.org"
+license=(GPL)
+depends=(libgdata gnome-online-accounts grilo libzapojit tracker)
+source=(http://download.gnome.org/sources/$pkgname/${pkgver:0:4}/$pkgname-$pkgver.tar.xz)
+sha256sums=('129807d398e7744870110e6875629b6858d289021271550569ce5afa10fe9ea8')
+ 
+build() {
+  cd $pkgname-$pkgver
+  ./configure --prefix=/usr --libexecdir=/usr/lib/$pkgname --disable-static
+  make
+}
+
+package() {
+  cd $pkgname-$pkgver
+  make DESTDIR="$pkgdir" install
+}
+
+# vim:set ts=2 sw=2 et:
