@@ -2,18 +2,18 @@
 # Maintainer: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgname=gnome-weather
-pkgver=3.10.1
+pkgver=3.11.90
 pkgrel=1
 pkgdesc="Access current weather conditions and forecasts"
 arch=(i686 x86_64)
 url="https://www.gnome.org/"
 license=(GPL)
-depends=(gtk3 gjs libgweather)
+depends=(gtk3 'gjs>=1.39.90' libgweather)
 makedepends=(intltool gobject-introspection)
 groups=(gnome-extra)
 install=gnome-weather.install
 source=(http://ftp.gnome.org/pub/GNOME/sources/${pkgname}/${pkgver:0:4}/${pkgname}-${pkgver}.tar.xz)
-sha256sums=('e0f2503c2cc9ced72da7728b262a767342b82852a74196db44377d18f1820fe4')
+sha256sums=('2c603c9b4ade80565b66fa52b30bd5192980b97f54e9f73af5321a7b7183f8a9')
 
 build() {
   cd $pkgname-$pkgver
@@ -21,10 +21,10 @@ build() {
   make
 }
 
-check() {
-  cd $pkgname-$pkgver
-  make check
-}
+#check() {
+#  cd $pkgname-$pkgver
+#  make check
+#}
 
 package() {
   cd $pkgname-$pkgver
