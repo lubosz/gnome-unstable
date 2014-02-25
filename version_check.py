@@ -10,7 +10,7 @@ arch_to_gnome = {
   "gdk-pixbuf2": "gdk-pixbuf",
   "glib2": "glib",
   "gphoto2": "gphoto",
-  "gtk3": "gtk",
+  "gtk3": "gtk+",
   "gtkhtml4": "gtkhtml",
   "gtkmm3": "gtkmm",
   "gtksourceview3" : "gtksourceview",
