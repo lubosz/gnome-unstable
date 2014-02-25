@@ -25,6 +25,7 @@ Need to be rebuilt:
 * gnome-logs
 * libmediaart
 * polari
+* appdata-tools (not gnome)
 
 ==Modified from AUR or added by myself==
 
