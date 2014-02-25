@@ -21,6 +21,7 @@ build() {
   make
 }
 
+# needs dogtail from aur and python2 patching
 #check() {
 #  cd $pkgname-$pkgver
 #  make check

@@ -26,12 +26,14 @@ Need to be rebuilt:
 * libmediaart
 * polari
 * appdata-tools (not gnome)
+* mozjs
 
 ==Modified from AUR or added by myself==
 
 * gnome-boxes
 * gnome-software (not in AUR)
 * gnome-sound-recorder
+* gfbgraph (only git version in AUR)
 
 Following non GNOME packages were added as a dependency:
 

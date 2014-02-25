@@ -1,19 +1,27 @@
 # $Id: PKGBUILD 199484 2013-11-13 12:09:00Z heftig $
 # Maintainer: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
+# Contributor: Lubosz Sarnecki <lubosz@gmail.com>
 
 pkgname=gnome-photos
-pkgver=3.10.2
+pkgver=3.11.90
 pkgrel=1
 pkgdesc="Access, organize, and share your photos on GNOME"
 arch=(i686 x86_64)
 url="https://www.gnome.org/"
 license=(GPL)
-depends=(exempi gtk3 libexif librsvg babl gegl gnome-desktop gnome-online-accounts lcms2 tracker hicolor-icon-theme grilo)
+depends=(exempi gtk3 libexif librsvg babl gegl gnome-desktop gnome-online-accounts lcms2 'tracker>=0.17.4' 'libtracker-sparql>=0.17.4' hicolor-icon-theme grilo gfbgraph)
 makedepends=(intltool)
 groups=(gnome-extra)
 install=gnome-photos.install
-source=(http://ftp.gnome.org/pub/GNOME/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.xz)
-sha256sums=('820503c26a0f829682dd46653e8f0850ac687aba42728ac74350ba8406e80975')
+source=(http://ftp.gnome.org/pub/GNOME/sources/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.xz
+tracker-control.patch)
+sha256sums=('1e2a1eb0d3b6fdaaa824f850eeb9cfb355c983b7eb1072fa9db67786e9bd327e'
+'52814b92ffec508b70270f07b8624665faaba08b564e9d77e2e5f3f7149edc02')
+
+prepare() {
+  cd $pkgname-$pkgver
+  patch -p1 < ../tracker-control.patch
+}
 
 build() {
   cd $pkgname-$pkgver
