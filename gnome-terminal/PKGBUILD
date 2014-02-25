@@ -2,12 +2,12 @@
 # Maintainer: Jan de Groot <jgc@archlinux.org>
 
 pkgname=gnome-terminal
-pkgver=3.10.2
+pkgver=3.11.3
 pkgrel=1
 pkgdesc="The GNOME Terminal Emulator"
 arch=(i686 x86_64)
 license=(GPL)
-depends=(vte3 gsettings-desktop-schemas dconf)
+depends=('vte3>=0.35.1' 'gsettings-desktop-schemas' 'dconf')
 makedepends=(gnome-doc-utils intltool itstool docbook-xsl desktop-file-utils gconf libnautilus-extension)
 optdepends=('gconf: settings migration when upgrading from older version')
 options=('!emptydirs')
@@ -15,7 +15,7 @@ url="http://www.gnome.org"
 groups=('gnome')
 install=gnome-terminal.install
 source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver:0:4}/$pkgname-$pkgver.tar.xz)
-sha256sums=('e02827c29de45c09973483d821ab29ea60ab3fbba34b62a81d67b8304a9ad913')
+sha256sums=('135d85cf2643c5b523451ff0dd42cc88970d4f34a7ce307fbc9b52055ed78ea8')
 
 build() {
   cd $pkgname-$pkgver

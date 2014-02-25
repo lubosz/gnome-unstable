@@ -3,12 +3,12 @@
 # Contributor: Jan de Groot <jgc@archlinux.org>
 
 pkgname=gedit
-pkgver=3.10.4
+pkgver=3.11.90
 pkgrel=1
 pkgdesc="A text editor for GNOME"
 arch=(i686 x86_64)
 license=(GPL)
-depends=(gtksourceview3 gsettings-desktop-schemas libpeas enchant iso-codes libsm desktop-file-utils python-gobject dconf)
+depends=('gtksourceview3>=3.11.2' 'gsettings-desktop-schemas' 'libpeas' 'enchant' 'iso-codes' 'libsm' 'desktop-file-utils' 'python-gobject' 'dconf')
 makedepends=(yelp-tools intltool zeitgeist)
 optdepends=('zeitgeist: Zeitgeist plugin')
 groups=(gnome-extra)
@@ -16,7 +16,7 @@ options=('!emptydirs')
 url="http://www.gnome.org"
 install=gedit.install
 source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
-sha256sums=('40dc10b6e26fd8523087e7321a20a063f4c1e586dffd7ce8ee78eead11359f9e')
+sha256sums=('dcf53aece3ef8f80ab2f3493969adc92920c7b9acbc8fb47009aace964fb42b2')
 
 build() {
   cd $pkgname-$pkgver

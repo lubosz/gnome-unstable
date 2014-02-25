@@ -2,9 +2,10 @@
 # Maintainer: Jan de Groot <jgc@archlinux.org>
 # Contributor: Steve Holmes <steve.holmes88@gmail.com>
 # Contributor: Giulio Bai <giulio@hewle.com>
+# Contributor: Lubosz Sarnecki <lubosz@gmail.com>
 
 pkgname=accerciser
-pkgver=3.8.2
+pkgver=3.11.90
 pkgrel=1
 pkgdesc="Interactive Python accessibility explorer for the GNOME desktop"
 arch=('any')
@@ -15,7 +16,7 @@ makedepends=('itstool' 'docbook-xsl' 'intltool')
 install=accerciser.install
 groups=('gnome-extra')
 source=(http://ftp.gnome.org/pub/GNOME/sources/accerciser/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
-sha256sums=('f4fef2bfa23a9344b613c39dfa128e4d07d98f87cd5011d7d649b2a9c0a6aadd')
+sha256sums=('283822146471b6fc905e6f62f707138be4c62d0eba53801a3d612ebc82aeb6b9')
 
 build () {
   cd "$srcdir/$pkgname-$pkgver"
