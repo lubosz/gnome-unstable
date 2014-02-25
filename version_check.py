@@ -139,11 +139,16 @@ def list_packages():
         local_color = annotate(local, upstream)
         arch_color = annotate(arch, upstream)
         
+        if upstream == "N/A":
+            upstream_color = RED + "N/A" + END
+        else:
+            upstream_color = upstream
+        
         print(
           fill(package, longest),
           fill_color(local, local_color, 10),
           fill_color(arch, arch_color, 10),
-          upstream)
+          upstream_color)
     
 
 list_packages()
