@@ -1,7 +1,7 @@
 # $Id: PKGBUILD 102883 2013-12-23 10:36:15Z bgyorgy $
 # Maintainer: Jonathan Conder <jonno.conder@gmail.com>
 pkgbase='packagekit'
-pkgname=('packagekit' 'packagekit-qt2' 'python2-packagekit')
+pkgname=('packagekit' 'packagekit-glib2' 'python2-packagekit')
 pkgver=0.8.16
 pkgrel=11
 pkgdesc="A system designed to make installation and updates of packages easier."
@@ -11,14 +11,8 @@ license=('GPL')
 makedepends=('dbus-glib' 'gobject-introspection' 'gtk-doc' 'intltool'
              'networkmanager' 'pacman'  'pm-utils' 'polkit' 'python2' 'qt4'
              'shared-mime-info' 'sqlite' 'udev')
-source=("http://www.packagekit.org/releases/PackageKit-$pkgver.tar.xz"
-        'adopt.patch'
-	'alpm.patch'
-	'libarchive.patch')
-sha256sums=('16a17382b0acd02a5b059e4cd0b46d18ef6d86e304a47da381d446d7cac1b9d9'
-            'd0ee8580202a878571dddd470017731299c63e5c5120afe881bb41b9544322b8'
-	    'c7f6da04f5b8f09e6d884ae4f480c064eae10de1d2528bf14d2f55b34e472c23'
-	    '0d3798c8992afdc0930aa271b3e44deb55c046ab4adee25b4ec4c33bcdd950e2')
+source=("http://www.packagekit.org/releases/PackageKit-$pkgver.tar.xz")
+sha256sums=('16a17382b0acd02a5b059e4cd0b46d18ef6d86e304a47da381d446d7cac1b9d9')
 
 prepare() {
   cd "$srcdir/PackageKit-$pkgver"
@@ -26,11 +20,6 @@ prepare() {
   sed -i 's@SUBDIRS = test@SUBDIRS =@' 'backends/Makefile.in'
   sed -i 's@python @python2 @' 'lib/python/packagekit/Makefile.in'
   sed -i 's@bin/python@bin/python2@' 'lib/python/packagekit/'*.py
-
-  patch -Np1 -i "$srcdir/adopt.patch"
-  patch -Np1 -i "$srcdir/alpm.patch"
-  patch -Np1 -i "$srcdir/libarchive.patch"
-  sed -i 's@sbin_PROGRAMS@bin_PROGRAMS@' 'contrib/device-rebind/Makefile.am'
 }
 
 build() {
@@ -54,8 +43,7 @@ build() {
               --disable-debuginfo-install \
               --enable-pm-utils \
               --disable-dummy \
-              --enable-alpm \
-              --with-default-backend=alpm
+              --disable-alpm
   make -s CFLAGS='-D_FILE_OFFSET_BITS=64 -O2 -Wno-unused-local-typedefs -Wno-deprecated-declarations -Wno-suggest-attribute=format'
 }
 
@@ -72,26 +60,23 @@ package_packagekit() {
 
   make DESTDIR="$pkgdir" install
 
-  rm -rf "$pkgdir/usr/include/PackageKit/packagekit-qt"*
-  rm -rf "$pkgdir/usr/lib/libpackagekit-qt"*
-  rm -rf "$pkgdir/usr/lib/pkgconfig/packagekit-qt"*
-  rm -rf "$pkgdir/usr/lib/cmake"
-
   rm -rf "$pkgdir/usr/lib/python"*
   rm -rf "$pkgdir/usr/share/PackageKit/website"
+  
+  rm -rf "$pkgdir/usr/include/PackageKit/packagekit-glib2"
+  rm -rf "$pkgdir/usr/lib/girepository-1.0/PackageKitGlib-1.0.typelib"
+  rm -rf "$pkgdir/usr/lib/libpackagekit-glib2.so"*
+  rm -rf "$pkgdir/usr/lib/pkgconfig/packagekit-glib2.pc"
+  rm -rf "$pkgdir/usr/share/gir-1.0/PackageKitGlib-1.0.gir"
 
-  mkdir -p "$pkgdir/usr/share/bash-completion/completions"
-  mv "$pkgdir/etc/bash_completion.d/pk-completion.bash" \
-     "$pkgdir/usr/share/bash-completion/completions/pkcon"
-  rmdir "$pkgdir/etc/bash_completion.d"
   touch "$pkgdir/var/log/PackageKit"
 }
 
-package_packagekit-qt2() {
-  depends=('packagekit' 'qt4')
-  pkgdesc=('Qt bindings for PackageKit')
+package_packagekit-glib2() {
+  depends=('packagekit' 'glib2')
+  pkgdesc=('glib bindings for PackageKit')
 
-  cd "$srcdir/PackageKit-$pkgver/lib/packagekit-qt2"
+  cd "$srcdir/PackageKit-$pkgver/lib/packagekit-glib2"
 
   make DESTDIR="$pkgdir" install
 }
