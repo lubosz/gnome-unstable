@@ -16,10 +16,15 @@ atk           dconf            gnome-online-accounts      gtk3       libsoup
 at-spi2-atk   glib2            gobject-introspection      json-glib
 at-spi2-core  glib-networking  gsettings-desktop-schemas  libgdata   vala
 
+Need to be rebuilt:
+
+* gtk3 (gir files are missing)
+
 ==Unmodified from AUR==
 
 * gnome-logs
 * libmediaart
+* polari
 
 ==Modified from AUR or added by myself==
 
