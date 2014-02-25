@@ -1,32 +1,36 @@
-I was too unpatient for the Arch GNOME packagers to finish 3.6, so I updated the missing packges. It works for me now :)
+=GNOME 3.12 Beta=
 
-These packages differ from current gnome-unstable.
+Since the GNOME 3.11.90 is beta and will not be packaged in Arch,
+maybe not even completetly in gnome-unstable, I added the missing packages.
 
-* baobab
-* clutter
-* empathy
-* eog
-* evolution-data-server
-* gjs
-* gnome-desktop
-* gnome-icon-theme-symbolic
-* gnome-icon-theme
-* gnome-keyring
-* gnome-menus
-* gnome-shell
-* gobject-introspection
-* gtksourceview3
-* libgweather
-* mutter
+These packages were updated
 
-I added following packages to the repository:
+http://artfiles.org/gnome.org/core/3.11/3.11.90/NEWS
+http://artfiles.org/gnome.org/apps/3.11/3.11.90/NEWS
 
-* gconf-editor
-* gnome-tweak-tool
-* gst-libav
-* gst-plugins-bad
-* gst-plugins-good
-* gst-plugins-ugly
-* totem
+=SOURCES=
 
-For all other packages, you can install binaries from gnome-unstable.
+==Unmodified from gnome-unstable==
+
+atk           dconf            gnome-online-accounts      gtk3       libsoup
+at-spi2-atk   glib2            gobject-introspection      json-glib
+at-spi2-core  glib-networking  gsettings-desktop-schemas  libgdata   vala
+
+==Unmodified from AUR==
+
+* gnome-logs
+* libmediaart
+
+==Modified from AUR or added by myself==
+
+* gnome-boxes
+* gnome-software (not in AUR)
+* gnome-sound-recorder
+
+Following non GNOME packages were added as a dependency:
+
+* packagekit 0.8.12
+
+All other packages were taken from the extra repo and updated
+
+
