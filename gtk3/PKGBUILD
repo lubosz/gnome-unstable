@@ -11,7 +11,7 @@ url="http://www.gtk.org/"
 install=gtk3.install
 depends=(atk cairo gtk-update-icon-cache libcups libxcursor libxinerama libxrandr libxi
          libxcomposite libxdamage pango shared-mime-info colord at-spi2-atk wayland libxkbcommon)
-makedepends=(gobject-introspection>=1.39.90)
+makedepends=(gobject-introspection)
 optdepends=('gnome-themes-standard: Default widget theme'
             'gnome-icon-theme: Default icon theme')
 license=(LGPL)
