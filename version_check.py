@@ -9,6 +9,18 @@ arch_to_gnome = {
   "gconf": "GConf"
 }
 
+GREEN = '\033[92m'
+RED = '\033[91m'
+END = '\033[0m'
+
+
+def annotate(current, upstream):
+    if current < upstream:
+        return RED + current + END
+    elif current == upstream:
+        return GREEN + current + END
+    return current
+
 def get_local_version(package):
     pkgbuild = open(package + "/PKGBUILD").readlines()
     
@@ -100,6 +112,11 @@ def fill(string, spaces):
         string += " "
     return string
 
+def fill_color(original, string, spaces):
+    for i in range(0, spaces - len(original)):
+        string += " "
+    return string
+
 
 def list_packages():
     packages = os.listdir(os.getcwd())
@@ -115,11 +132,18 @@ def list_packages():
 
     for package in packages:
       if os.path.isdir(package) and package != ".git":
+        local = get_local_version(package)
+        arch = get_pacman_version(package)
+        upstream = get_upstream_version(package)
+        
+        local_color = annotate(local, upstream)
+        arch_color = annotate(arch, upstream)
+        
         print(
           fill(package, longest),
-          fill(get_local_version(package), 10),
-          fill(get_pacman_version(package), 10),
-          get_upstream_version(package))
+          fill_color(local, local_color, 10),
+          fill_color(arch, arch_color, 10),
+          upstream)
     
 
 list_packages()
