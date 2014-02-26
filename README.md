@@ -39,6 +39,12 @@ Following non GNOME packages were added as a dependency:
 
 * packagekit 0.8.12
 
+== Same version as extra, but need to be rebuilt ==
+
+grilo
+grilo-plugins 
+clutter-gst
+
 All other packages were taken from the extra repo and updated
 
 
