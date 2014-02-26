@@ -120,7 +120,7 @@ def get_pacman_version(package):
     
 
 def get_bash_out(command):
-    p = subprocess.Popen(command, stdout=subprocess.PIPE)
+    p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
     out, err = p.communicate()
     return out
 
@@ -148,11 +148,18 @@ def print_package(package, longest):
         
         local_color = annotate(local, upstream)
         arch_color = annotate(arch, upstream)
+
+        if arch == "N/A":
+            arch_color = RED + "N/A" + END
         
         if upstream == "N/A":
             upstream_color = RED + "N/A" + END
         else:
             upstream_color = upstream
+        
+        
+        if upstream == "N/A" and arch == "N/A":
+            local_color = GREEN + local + END
         
         print(
           fill(package, longest),
