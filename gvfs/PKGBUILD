@@ -1,16 +1,17 @@
 # $Id: PKGBUILD 204422 2014-01-19 16:28:55Z bpiotrowski $
 # Maintainer: Jan de Groot <jgc@archlinux.org>
+# Contributor: Lubosz Sarnecki <lubosz@gmail.com>
 
 pkgbase=gvfs
 pkgname=('gvfs' 'gvfs-smb' 'gvfs-afc' 'gvfs-afp' 'gvfs-gphoto2' 'gvfs-goa' 'gvfs-mtp')
-pkgver=1.18.3
+pkgver=1.19.90
 pkgrel=3
 arch=('i686' 'x86_64')
 license=('LGPL')
 makedepends=('avahi' 'dbus-glib' 'fuse' 'intltool' 'libarchive' 'libcdio-paranoia' 'libgphoto2' 'libimobiledevice' 'libsoup' 'smbclient' 'udisks2' 'libsecret' 'docbook-xsl' 'gtk3' 'libmtp' 'gnome-online-accounts' 'libbluray')
 url="http://www.gnome.org"
 source=(http://ftp.gnome.org/pub/gnome/sources/$pkgbase/${pkgver%.*}/$pkgbase-$pkgver.tar.xz)
-sha256sums=('1d829716dcf1c5c016ee0c8aaff4cfd4fc4c719a4125f5c4f206f26c5bdc472c')
+sha256sums=('3a59fb24f05549dee332efc811b85a74868ef755899f201b78a98340b196567c')
 
 build() {
   cd "$pkgbase-$pkgver"

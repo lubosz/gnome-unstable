@@ -1,7 +1,8 @@
 # Maintainer: Marius Nestor <marius at softpedia dot com>
+# Contributor: Lubosz Sarnecki <lubosz@gmail.com>
 
 pkgname=gnome-sound-recorder
-pkgver=3.11.3
+pkgver=3.11.9
 pkgrel=1
 pkgdesc="A utility to make simple audio recording from your GNOME desktop"
 arch=('any')
@@ -10,11 +11,10 @@ license=('GPL2.1')
 depends=('gnome-desktop' 'flac' 'opus-tools' 'libvorbis' 'lame')
 makedepends=('intltool')
 source=(http://ftp.acc.umu.se/pub/GNOME/sources/gnome-sound-recorder/3.11/$pkgname-$pkgver.tar.xz)
-md5sums=('ddce5e81ad229c0d72e40f0e3013f8fb')
+sha256sums=('0135589d38984cb6898f9b9d5735673b7ae39c206336a5e4e9004a9122bb2c21')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
-
   ./configure --prefix=/usr
   make
 }

@@ -1,9 +1,10 @@
 # $Id: PKGBUILD 198309 2013-10-30 14:04:58Z allan $
 # Maintainer: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 # Contributor: Jan de Groot <jgc@archlinux.org>
+# Contributor: Lubosz Sarnecki <lubosz@gmail.com>
 
 pkgname=lightsoff
-pkgver=3.10.1
+pkgver=3.11.90
 pkgrel=1
 pkgdesc="Turn off all the lights"
 arch=('i686' 'x86_64')
@@ -17,7 +18,7 @@ install=lightsoff.install
 url="https://live.gnome.org/Lightsoff"
 groups=('gnome-extra')
 source=(http://ftp.gnome.org/pub/gnome/sources/$pkgname/${pkgver:0:4}/$pkgname-$pkgver.tar.xz)
-sha256sums=('4db69a39a4cceb28e1c8331d65242643d1c7a9fe4c31c42f58f0421a9f205996')
+sha256sums=('313cc5f47a2ef58d06f245b724840d0a47378d16d9a03644deea6c883f5ec863')
 
 build() {
   cd $pkgname-$pkgver
